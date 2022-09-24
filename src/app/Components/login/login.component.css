@@ -1,0 +1,32 @@
+.logIn {
+    padding: 20px;
+    width: 60%;
+    background-color: black;
+}
+
+.logIn form{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.logIn button{
+    margin: auto;
+    width: 15%;
+}
+
+.logIn h1{
+    color:whitesmoke;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size:40px;
+    }
+
+    .logIn a{
+        color:blue;
+        text-align: center;
+    }
+    
+input{
+    color:white;
+}

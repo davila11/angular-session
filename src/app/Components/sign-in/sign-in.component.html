@@ -1,0 +1,44 @@
+<div class="signIn">
+    <form [formGroup]=" formsigIn">
+        <h1>Sign In</h1>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Username</mat-label>
+            <input type="text" matInput formControlName="name" placeholder="">
+            <mat-error *ngIf="formsigIn.get('name')?.hasError('required') && formsigIn.get('name')?.touched ">
+              Username is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Age</mat-label>
+            <input type="number" matInput formControlName="age" placeholder="">
+            <mat-error *ngIf="formsigIn.get('age')?.hasError('required') && formsigIn.get('age')?.touched ">
+              Age is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-radio-group aria-label="Select an option">
+            <mat-label style="color:#bbbbbb">Gender:</mat-label><br>
+            <mat-radio-button style="color:white" value="1">Male</mat-radio-button>
+            <mat-radio-button style="color:white"value="2">Female</mat-radio-button>
+          </mat-radio-group><br><br>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+            <mat-error *ngIf="formsigIn.get('email')?.hasError('email') && !formsigIn.get('email')?.hasError('required') && formsigIn.get('emailUser')?.hasError('pattern')">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="formsigIn.get('email')?.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password" placeholder="Ex. pat@example.com">
+            <mat-error *ngIf="formsigIn.get('password')?.hasError('required') && formsigIn.get('password')?.touched ">
+              Password is <strong>required</strong>
+            </mat-error>
+          </mat-form-field><br>
+          <button mat-flat-button color="accent">Get Into</button>
+          <h3>Already have account?<a [routerLink]="['/login']" >(Click here)</a></h3>
+    </form>
+</div>
+

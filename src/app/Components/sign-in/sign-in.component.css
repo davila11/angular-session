@@ -1,0 +1,38 @@
+
+.signIn {
+    padding: 20px;
+    width: 60%;
+    background-color: black;
+}
+
+.signIn form{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.signIn button{
+    margin: auto;
+    width: 15%;
+}
+
+.signIn h1{
+color:whitesmoke;
+text-align: center;
+font-family: 'Inter', sans-serif;
+font-size:40px;
+}
+
+.signIn h3{
+    color:rgb(151, 255, 215);
+    text-align: center;
+}
+
+.signIn a{
+    text-align: center;
+    color:blue;
+}
+
+input{
+    color:white;
+}

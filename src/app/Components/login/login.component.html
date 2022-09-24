@@ -1,0 +1,24 @@
+<div class="logIn">
+    <form [formGroup]=" formLogin">
+        <h1>Log In</h1>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="emailUser" placeholder="Ex. pat@example.com">
+            <mat-error *ngIf="formLogin.get('emailUser')?.hasError('emailUser') && !formLogin.get('emailUser')?.hasError('required') && formLogin.get('emailUser')?.hasError('pattern')">
+              Please enter a valid email address
+            </mat-error>
+            <mat-error *ngIf="formLogin.get('emailUser')?.hasError('required')">
+              Email is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password" placeholder="Ex. pat@example.com">
+            <mat-error *ngIf="formLogin.get('password')?.hasError('required') && formLogin.get('password')?.touched ">
+              Password is <strong>required</strong>
+            </mat-error>
+          </mat-form-field><br>
+          <button mat-flat-button color="accent">Get Into</button>
+          <a [routerLink]="['/signin']">Register now</a>
+    </form>
+</div>
