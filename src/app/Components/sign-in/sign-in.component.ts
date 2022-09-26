@@ -41,8 +41,9 @@ export class SignInComponent implements OnInit {
     event.preventDefault();
     const user = this.formsigIn.value;
     console.log(user)
-    // if( this.formsigIn.valid ) {
-    //   localStorage.setItem("users", user)
-    // }
+    if( this.formsigIn.valid ) {
+      this.userList.push(user);
+      localStorage.setItem("users", JSON.stringify(this.userList))
+    }
   }
 }

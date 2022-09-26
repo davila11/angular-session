@@ -1,5 +1,5 @@
 <div class="logIn">
-    <form [formGroup]=" formLogin">
+    <form [formGroup]=" formLogin" (ngSubmit)="confirmUser($event)">
         <h1>Log In</h1>
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Email</mat-label>
@@ -18,7 +18,7 @@
               Password is <strong>required</strong>
             </mat-error>
           </mat-form-field><br>
-          <button mat-flat-button color="accent">Get Into</button>
+          <button mat-flat-button color="accent" type="submit">Get Into</button>
           <h3><a [routerLink]="['/signin']">Register now</a></h3>
     </form>
 </div>
