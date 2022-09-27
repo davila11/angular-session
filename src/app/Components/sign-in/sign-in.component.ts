@@ -28,31 +28,47 @@ export class SignInComponent implements OnInit {
       name: [null, [Validators.required]],
       age: [null, [Validators.required]],
       gender: [null, [Validators.required]],
-      email: [
-        null,
-        [
-          Validators.required,
-          Validators.pattern(/^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/),
-        ],
-      ],
-      password: [
-        null,
-        [
-          Validators.required,
-          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/),
-        ],
-      ],
+      email: [null, [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
+      password: [null, [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/)]],
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   createUser(event: Event) {
     event.preventDefault();
     //Create the user and clean all inputs
     if (this.formsigIn.valid) {
       const user = this.formsigIn.value;
-      
+      if (JSON.parse(localStorage.getItem('users') as string)) {
+        this.userList = JSON.parse(localStorage.getItem('users') as string);
+      }
+      // console.log("New user",user)
+      if (this.userList) {
+        let validEmail = this.userList.find((element) => element.email === user.email);
+        if (validEmail) this.confirm = true;
+        else {
+          this.userList.push(user);
+          localStorage.setItem('users', JSON.stringify(this.userList))
+          this.formsigIn = this.FormB.group({
+            name: [null, [Validators.required]],
+            age: [null, [Validators.required]],
+            gender: [null, [Validators.required]],
+            email: [null, [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
+            password: [null, [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/)]],
+          });
+        }
+      }
     }
+  }
+
+  get emailValue() {
+    return this.formsigIn.get('email');
+  }
+
+  getErrorEmail() {
+    return this.emailValue?.hasError('required') ? 'Email is required'
+      : this.emailValue?.hasError('pattern') ? 'Not a valid email address'
+        : '';
   }
 }

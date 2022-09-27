@@ -36,3 +36,7 @@ font-size:40px;
 input{
     color:white;
 }
+
+.mat-radio-button~.mat-radio-button {
+    margin-left: 16px;
+}
