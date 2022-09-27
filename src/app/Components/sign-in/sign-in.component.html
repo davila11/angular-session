@@ -26,7 +26,7 @@
             <mat-error *ngIf="formsigIn.get('email')?.hasError('required') && formsigIn.get('email')?.touched">
               Email is <strong>required</strong>
             </mat-error>
-            <mat-error *ngIf="formsigIn.get('email')?.hasError('email') || formsigIn.get('email')?.hasError('pattern')">
+            <mat-error *ngIf="formsigIn.get('email')?.hasError('email') || formsigIn.get('email')?.hasError('pattern') && confirm">
               Please enter a valid email address
             </mat-error>
           </mat-form-field>

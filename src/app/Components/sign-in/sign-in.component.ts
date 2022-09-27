@@ -18,11 +18,13 @@ export class SignInComponent implements OnInit {
 
   formsigIn: FormGroup;
   userList: IUser[];
+  confirm:boolean;
 
 
   constructor(private FormB: FormBuilder) {
 
     this.userList = [];
+    this.confirm =false;
 
     this.formsigIn = FormB.group({
       name: ['', [Validators.required]],
@@ -40,10 +42,21 @@ export class SignInComponent implements OnInit {
   createUser(event: Event) {
     event.preventDefault();
     const user = this.formsigIn.value;
+    let localInfo = JSON.parse(localStorage.getItem('users')as string);
+
     console.log(user)
+
     if( this.formsigIn.valid ) {
-      this.userList.push(user);
-      localStorage.setItem("users", JSON.stringify(this.userList))
+      let confirmUser = localInfo.find(((element: { email: string; }) => element.email === user.email));
+      if(confirmUser){
+        if(confirmUser === user.email){
+         this.confirm = true;
+        }else{
+          this.confirm = false;
+          localInfo.push(user);
+          localStorage.setItem("users", JSON.stringify(localInfo))
+        }
+      } 
     }
   }
 }
