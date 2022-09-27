@@ -26,10 +26,14 @@
             <mat-error *ngIf="formsigIn.get('email')?.hasError('required') && formsigIn.get('email')?.touched">
               Email is <strong>required</strong>
             </mat-error>
-            <mat-error *ngIf="formsigIn.get('email')?.hasError('email') || formsigIn.get('email')?.hasError('pattern') && confirm">
-              Please enter a valid email address
+            <mat-error *ngIf="formsigIn.get('email')?.hasError('email') || formsigIn.get('email')?.hasError('pattern')">
+               Please enter a valid email address
             </mat-error>
+            <mat-error *ngIf="confirm">
+              This email already exists
+           </mat-error>
           </mat-form-field>
+          {{confirm |json }}
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Password</mat-label>
             <input type="password" matInput formControlName="password" placeholder="Ex. Hello123">

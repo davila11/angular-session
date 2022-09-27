@@ -12,17 +12,15 @@ export interface IUser {
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css']
+  styleUrls: ['./sign-in.component.css'],
 })
-export class SignInComponent implements OnInit {
 
+export class SignInComponent implements OnInit {
   formsigIn: FormGroup;
   userList: IUser[];
   confirm: boolean;
 
-
   constructor(private FormB: FormBuilder) {
-
     this.userList = [];
     this.confirm = false;
 
@@ -30,13 +28,24 @@ export class SignInComponent implements OnInit {
       name: [null, [Validators.required]],
       age: [null, [Validators.required]],
       gender: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.pattern(/^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/), this.checkEmail]],
-      password: [null, [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/)]]
+      email: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(/^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/),
+        ],
+      ],
+      password: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/),
+        ],
+      ],
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   createUser(event: Event) {
     event.preventDefault();
@@ -44,43 +53,49 @@ export class SignInComponent implements OnInit {
     if (this.formsigIn.valid) {
       const user = this.formsigIn.value;
       const localInfo = JSON.parse(localStorage.getItem('users') as string);
-      console.log(user)
-      // this.userList.push(user)
-      localInfo.push(user)
-      console.log("LocalInfo", localInfo)
-      localStorage.setItem("users", JSON.stringify(localInfo))
-      this.formsigIn = this.FormB.group({
-        name: [null, [Validators.required]],
-        age: [null, [Validators.required]],
-        gender: [null, [Validators.required]],
-        email: [null, [Validators.required, Validators.pattern(/^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/)]],
-        password: [null, [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/)]]
-      });
+      let confirmUser = localInfo.find(
+        (element: { email: string }) => element.email === user.email
+      );
+      if (confirmUser.email === user.email) {
+        this.confirm = true;
+        console.log('ingresa un email valido');
+      } else{
+        // this.userList.push(user)
+        this.confirm = false;
+        localInfo.push(user);
+        console.log('LocalInfo', localInfo);
+        localStorage.setItem('users', JSON.stringify(localInfo));
+        this.formsigIn = this.FormB.group({
+          name: [null, [Validators.required]], 
+          age: [null, [Validators.required]],
+          gender: [null, [Validators.required]],
+          email: [
+            null,
+            [
+              Validators.required,
+              Validators.pattern(/^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/),
+            ],
+          ],
+          password: [
+            null,
+            [
+              Validators.required,
+              Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/),
+            ],
+          ],
+        });
+      }
     }
   }
 
-  checkEmail(control: { value: string }) {
-    let enteredEmail = control.value;
-    const localInfo = JSON.parse(localStorage.getItem('users') as string);
-    let confirmUser = localInfo.find(((element: { email: string; }) => element.email === enteredEmail));
-    return (confirmUser.email === enteredEmail) && enteredEmail
-      ? { requirements: true }
-      : null;
-  }
-
-
-
-
-  // if (this.formsigIn.valid) {
-  //   let confirmUser = localInfo.find(((element: { email: string; }) => element.email === user.email));
-  //   if (confirmUser) {
-  //     if (confirmUser === user.email) {
-  //       this.confirm = true;
-  //     } else {
-  //       this.confirm = false;
-  //       localInfo.push(user);
-  //       localStorage.setItem("users", JSON.stringify(localInfo))
-  //     }
+  // checkEmail(control: { value: string }) {
+  //   let enteredEmail = control.value;
+  //   const localInfo = JSON.parse(localStorage.getItem('users') as string);
+  //   let confirmUser = localInfo.find(
+  //     (element: { email: string }) => element.email === enteredEmail
+  //   );
+  //   return confirmUser.email === enteredEmail && enteredEmail
+  //     ? { requirements: true }
+  //     : null;
+  // }
 }
-
-
