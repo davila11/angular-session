@@ -1,12 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-export interface IUser {
+export class IUser {
   name: string;
   age: number;
   gender: string;
   email: string;
   password: string;
+
+  constructor(newName='',newAge=0, newGender='', newEmail='', newPassword=''){
+    this.name= newName;
+    this.age=newAge;
+    this.gender=newGender;
+    this.email=newEmail;
+    this.password=newPassword;
+  }
 }
 
 @Component({

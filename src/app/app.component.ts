@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { IUser } from './Components/sign-in/sign-in.component';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'Proyecto';
+
+ 
 
 constructor(private route: Router){
 

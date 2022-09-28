@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { _isNumberValue } from '@angular/cdk/coercion';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { IUser } from '../sign-in/sign-in.component';
@@ -8,12 +9,20 @@ import { IUser } from '../sign-in/sign-in.component';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
+
+
 export class LoginComponent implements OnInit {
 
+
+
+  @Output () userData:EventEmitter<IUser>
+
+  
   userList: IUser[];
   formLogin: FormGroup;
 
   constructor(private FormB: FormBuilder, private router: Router) {
+    this.userData = new EventEmitter();
     this.userList = [];
     this.formLogin = FormB.group({
       emailUser: ['', [Validators.required, Validators.pattern(/^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/)]],
@@ -36,6 +45,10 @@ export class LoginComponent implements OnInit {
           let validPassword = userAccount.password === userLog.password;
           if (validPassword) {
             this.router.navigate(['main'])
+
+          
+       
+
             // alert(`Tus datos son: \n 
             //   Name: ${userAccount.name} \n
             //   Age: ${userAccount.age} \n

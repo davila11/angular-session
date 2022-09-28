@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { IUser } from '../sign-in/sign-in.component';
 
 @Component({
   selector: 'app-main-page',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor() { }
+  
+
+  dataUser:string;
+
+  constructor(private activateRedirect: ActivatedRoute) {
+    this.dataUser='';
+
+   }
 
   ngOnInit(): void {
-  }
+    this.activateRedirect.params.subscribe(params =>{
+      this.dataUser = params['dataUser']
 
+  })
+}
 }
