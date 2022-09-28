@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { IUser } from '../sign-in/sign-in.component';
 
 @Component({
@@ -8,54 +9,41 @@ import { IUser } from '../sign-in/sign-in.component';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+
+  userList: IUser[];
   formLogin: FormGroup;
 
-  constructor(private FormB: FormBuilder) {
+  constructor(private FormB: FormBuilder, private router: Router) {
+    this.userList = [];
     this.formLogin = FormB.group({
-      emailUser: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(/^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/),
-        ],
-      ],
+      emailUser: ['', [Validators.required, Validators.pattern(/^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/)]],
       password: ['', [Validators.required]],
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  confirmUser($event: Event) {
-    $event.preventDefault();
-    const user = this.formLogin.value;
-    let localUser = JSON.parse(localStorage.getItem('users') as string);
-    let validEmail: boolean = false;
-    let validPassword: boolean =false;
-
-    
-
-    const vUser= localUser.find((element:{email:string}) => element.email === user.emailUser);
-    console.log(localUser.includes(vUser));
-
-    // element.email === user.emailUser
-
-    // console.log(validEmail)
-
-    //   else validEmail= false;
-    //   console.log(validEmail)
-    // }
-
-    // for(const element of localUser){
-    //   if(element.password === user.password){
-    //     validPassword=true;
-    //     // console.log(validPassword)
-    //   }
-    //   else validPassword= false;
-    //   console.log(validPassword)
-    // }
-
-    //   let validUser = JSON.parse(localStorage.getItem('users',));
-
-    // console.log(validUser);
+  confirmUser(event: Event) {
+    event.preventDefault();
+    if (this.formLogin.valid) {
+      const userLog = this.formLogin.value;
+      if (JSON.parse(localStorage.getItem('users') as string)) {
+        this.userList = JSON.parse(localStorage.getItem('users') as string);
+      };
+      if (this.userList) {
+        let userAccount = this.userList.find((element) => element.email === userLog.emailUser);
+        if (userAccount) {
+          let validPassword = userAccount.password === userLog.password;
+          if (validPassword) {
+            this.router.navigate(['main'])
+            // alert(`Tus datos son: \n 
+            //   Name: ${userAccount.name} \n
+            //   Age: ${userAccount.age} \n
+            //   Gender: ${userAccount.gender === "M" ? "Male" : "Female"}`)
+          } else alert("Wrong password")
+        }
+        else alert("Email no encontrado")
+      }
+    }
   }
 }

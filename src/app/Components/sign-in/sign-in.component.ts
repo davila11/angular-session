@@ -42,7 +42,7 @@ export class SignInComponent implements OnInit {
       const user = this.formsigIn.value;
       if (JSON.parse(localStorage.getItem('users') as string)) {
         this.userList = JSON.parse(localStorage.getItem('users') as string);
-      }
+      };
       // console.log("New user",user)
       if (this.userList) {
         let validEmail = this.userList.find((element) => element.email === user.email);
@@ -50,13 +50,7 @@ export class SignInComponent implements OnInit {
         else {
           this.userList.push(user);
           localStorage.setItem('users', JSON.stringify(this.userList))
-          this.formsigIn = this.FormB.group({
-            name: [null, [Validators.required]],
-            age: [null, [Validators.required]],
-            gender: [null, [Validators.required]],
-            email: [null, [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
-            password: [null, [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/)]],
-          });
+          this.formsigIn.reset();
         }
       }
     }
